@@ -1,10 +1,10 @@
 // ? Tetris
-// * Create a Grid width = 10, height 20
+// ? Create a Grid width = 12, height 20
 // * Create one block - use matrix.
 // * Create array with seven different shapes of blocks - 'tetriminos'
 // * Create array with seven different colours. Will choose them randomly.
-// * Create score variable and score button to show the result.
-// * Create level button
+// ? Create score variable and score button to show the result.
+// ? Create level button
 
 // * Random block appears on a top
 // * How blocks are dropping down - setInterval? (remove - define new position - add  new position)?
@@ -26,3 +26,28 @@
 // * How to move to the next level, when playeyer accumulates special ammount of points.
 // * increase the speed with each level
 // * How to reset the game?
+function init() {
+  // * ---> GRID <---
+  const grid = document.querySelector('.grid')
+  const gridWidth = 12
+  const gridHeight = 20
+  const cellCount = gridWidth * gridHeight
+  const cells = []
+  const score = document.querySelector('score')
+  const level = documnet.querySelector('level')
+
+  function createGrid() {
+    for (let i = 0; i < cellCount; i++) {
+      const cell = document.createElement('div')
+
+      cell.innerText = i
+      grid.appendChild(cell)
+      cells.push(cell)
+    }
+  }
+
+  // * --->  <---
+
+  createGrid()
+}
+window.addEventListener('DOMContentLoaded', init)

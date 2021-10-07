@@ -1,0 +1,43 @@
+.header {
+  color: blue;
+  font-weight: bold;
+  font-size: 50px;
+  text-align: center;
+  width: 380px;
+  margin-bottom: 25px;
+}
+.info {
+  display: flex;
+  justify-content: space-evenly;
+  width: 380px;
+  margin-bottom: 30px;
+}
+.grid-wrapper {
+  width: 380px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 380px;
+  /* align-items: center;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
+  
+  
+  height: 100%;
+  justify-content: center;
+  height: 600px;
+  width: 600px; */
+}
+
+.grid div {
+  width: 33px;
+  height: 33px;
+  border: 1px solid lightgrey;
+  color: black;
+  font-size: 10px;
+  text-align: center;
+}
