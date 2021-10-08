@@ -4,7 +4,7 @@
 // * Create array with seven different shapes of blocks - 'tetriminos'
 // * Create array with seven different colours. Will choose them randomly.
 // ? Create score variable and score button to show the result.
-// ? Create level button
+// * Create level button
 
 // * Random block appears on a top
 // * How blocks are dropping down - setInterval? (remove - define new position - add  new position)?
@@ -28,25 +28,48 @@
 // * How to reset the game?
 function init() {
   // * ---> GRID <---
+  const score = document.querySelector('score')
+  const level = document.querySelector('level')
   const grid = document.querySelector('.grid')
   const gridWidth = 12
   const gridHeight = 20
-  const cellCount = gridWidth * gridHeight
   const cells = []
-  const score = document.querySelector('score')
-  const level = documnet.querySelector('level')
+  const cellCount = gridWidth * gridHeight
+  const playField = [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  ]
 
   function createGrid() {
-    for (let i = 0; i < cellCount; i++) {
-      const cell = document.createElement('div')
-
-      cell.innerText = i
-      grid.appendChild(cell)
-      cells.push(cell)
+    for (let y = 0; y < gridHeight; y++) {
+      for (let x = 0; x < gridWidth; x++) {
+        const cell = document.createElement('div')
+        cell.className = 'cell'
+        grid.appendChild(cell)
+        cells.push(cell)
+      }
     }
   }
 
-  // * --->  <---
+  // // * --->  <---
 
   createGrid()
 }
