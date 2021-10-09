@@ -30,7 +30,7 @@
 // * How to reset the game?
 
 function init() {
-  // * ---> GRID, FUNCTION CREATE NEW GRID<---
+  // * ---> GRID, FUNCTION CREATE NEW GRID <--- * //
   const score = document.querySelector('score')
   const level = document.querySelector('level')
   const grid = document.querySelector('.grid')
@@ -41,29 +41,29 @@ function init() {
   // Create a Grid width = 12, height 20 - grid should refresh. setTimeout? function to create grid.
   // playfield - contains a picture of a grid on a timebeing. Every time when we change smth it is building new grid with changes.
   let playField = [
-    [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 1, 1, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   ]
 
-  function createGrid() {
+  function createNewGrid() {
     let gridInnerText = ''
     for (let y = 0; y < gridRows; y++) {
       for (let x = 0; x < gridColumns; x++) {
@@ -77,40 +77,63 @@ function init() {
     }
     grid.innerHTML = gridInnerText
   }
-  createGrid()
+  createNewGrid()
+  // * ---> MOVE BLOCK, FUNCTION <--- * //
+  //if we start checking from top to bottom - firs 1 is changing on 0, when we are checking new row we are cganging the same 1 on 0, creating a bug. We need to check from bottom to top. Remove, define, add new position.
+  function moveBlockDown() {
+    for (let y = gridRows - 1; y >= 0; y--) {
+      for (let x = 0; x < gridColumns; x++) {
+        if (playField[y][x] === 1) {
+          playField[y + 1][x] = 1
+          playField[y][x] = 0
+        }
+      }
+    }
+  }
+
+  // * ---> STRAT GAME FUNCTION <--- * //
+  // If we will call functions moveBlockDown and creatGrid, our block will move.
+  //Function startGame with setTimeout will move block down every 1000 msec.
+  function startGame() {
+    moveBlockDown()
+    createNewGrid()
+    // startGame() - is not working, block immediately felling down on the bottom. we neen to add delay.
+    //we have to put another timer to move it down, because without block is doing only one movement.
+    setTimeout(startGame, 1000)
+  }
+  setTimeout(startGame, 1000)
+
+  // function createBlock() {
+  //     // for (let y = 0; y < gridRows; y++) {
+  //     //   for (let x = 0; x < gridColumns; x++) {
+  //     //     if (playField[y][x] === 1) {
+  //     //       .className = 'blue'
+  //     //     } else {
+  //     //       .className = 'cell'
+  //     //     }
+  //     //   }
+  //     // }
+  //   }
+
+  //   // createBlock()
+
+  //   // * ---> Move block <---
+
+  //   // function moveBlockDown() {
+  //   //   for (let y = gridRows - 1; y >= 0; y--) {
+  //   //     for (let x = 0; x < gridColumns; x++) {
+  //   //       if (playField[y][x] === 1) {
+  //   //         // console.log(y)
+  //   //         // console.log(x)
+  //   //         // console.log(playField[y])
+  //   //         playField[y + 1][x] = 1
+  //   //         playField[y][x] = 0
+  //   //         // console.log(y)
+  //   //         // console.log(x)
+  //   //       }
+  //   //     }
+  //   //   }
+  //   // }
+  //   // moveBlockDown()
 }
-
-//   function createBlock() {
-//     // for (let y = 0; y < gridRows; y++) {
-//     //   for (let x = 0; x < gridColumns; x++) {
-//     //     if (playField[y][x] === 1) {
-//     //       .className = 'blue'
-//     //     } else {
-//     //       .className = 'cell'
-//     //     }
-//     //   }
-//     // }
-//   }
-
-//   // createBlock()
-
-//   // * ---> Move block <---
-
-//   // function moveBlockDown() {
-//   //   for (let y = gridRows - 1; y >= 0; y--) {
-//   //     for (let x = 0; x < gridColumns; x++) {
-//   //       if (playField[y][x] === 1) {
-//   //         // console.log(y)
-//   //         // console.log(x)
-//   //         // console.log(playField[y])
-//   //         playField[y + 1][x] = 1
-//   //         playField[y][x] = 0
-//   //         // console.log(y)
-//   //         // console.log(x)
-//   //       }
-//   //     }
-//   //   }
-//   // }
-//   // moveBlockDown()
-
 window.addEventListener('DOMContentLoaded', init)
