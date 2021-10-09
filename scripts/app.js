@@ -6,6 +6,10 @@
 
 // / How to detect collision with bottom row? fuctionn to check if is possible to move down.
 // / How to stop (freeze) the piece when it is on the bottom? function check if it is bottom line?
+// / how to detect freezed pices and stop moving the block.
+
+// * How to connect left/right moves to the keybord?
+// * How to detect collision with a wall, and to stop block to run out of the grid. functions canMoveRight? canMoveLeft?
 
 // * Create one block - use matrix.
 // * Create array with seven different shapes of blocks - 'tetriminos'
@@ -15,9 +19,8 @@
 // *
 // *
 // * How to make the row to disappear? How to find that all cells of a row are filled in? All 1s?
-// * How the blocks placed above fall one rank, when a line is completed.
-// * How to connect rotation and left/right moves to the keybord?
-// * How to detect collision with a wall, and to stop block to run out of the grid.
+// * How to connect rotation to the keybord?
+
 // * How to rotate near the wall?
 
 //? BONUS TASKS
@@ -60,8 +63,8 @@ function init() {
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 2, 2, 0, 0, 0],
+    [0, 0, 0, 0, 0, 2, 2, 0, 0, 0],
   ]
 
   function createNewGrid() {
@@ -71,6 +74,9 @@ function init() {
         if (playField[y][x] === 1) {
           // if on a playingField there are 1s, they will be coloured in blue. adding class movingCell.
           gridInnerText += '<div class="cell movingCell"></div>'
+        } else if (playField[y][x] === 2) {
+          // if on a playingField there are 2s, they will be coloured in yellow. adding class freezedCell.
+          gridInnerText += '<div class="cell freezedCell"></div>'
         } else {
           gridInnerText += '<div class="cell"></div>'
         }
@@ -85,7 +91,7 @@ function init() {
     for (let y = gridRows - 1; y >= 0; y--) {
       for (let x = 0; x < gridColumns; x++) {
         if (playField[y][x] === 1) {
-          if (y === gridRows - 1) {
+          if (y === gridRows - 1 || playField[y + 1][x] === 2) {
             return false
           }
         }
@@ -135,24 +141,5 @@ function init() {
   //   }
 
   //   // createBlock()
-
-  //   // * ---> Move block <---
-
-  //   // function moveBlockDown() {
-  //   //   for (let y = gridRows - 1; y >= 0; y--) {
-  //   //     for (let x = 0; x < gridColumns; x++) {
-  //   //       if (playField[y][x] === 1) {
-  //   //         // console.log(y)
-  //   //         // console.log(x)
-  //   //         // console.log(playField[y])
-  //   //         playField[y + 1][x] = 1
-  //   //         playField[y][x] = 0
-  //   //         // console.log(y)
-  //   //         // console.log(x)
-  //   //       }
-  //   //     }
-  //   //   }
-  //   // }
-  //   // moveBlockDown()
 }
 window.addEventListener('DOMContentLoaded', init)

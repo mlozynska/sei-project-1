@@ -1,6 +1,5 @@
 body {
   margin: 0;
-  /* background: #000; */
 }
 
 .header {
@@ -47,6 +46,6 @@ body {
   background-color: blue;
 }
 
-.fixedCell {
-  background-color: green;
+.freezedCell {
+  background-color: yellow;
 }
