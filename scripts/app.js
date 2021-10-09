@@ -1,12 +1,12 @@
 // ? Tetris
 
-// ? Create score variable and score box to show the result.
-// ? Create level box
+// / Create score variable and score box to show the result.
+// / Create level box
+// / How blocks are dropping down - setTimeout? 1s are chanching on 0, bottom 0s are changing on 1. setTimeout in setTimeout.
 
-// * How blocks are dropping down - setTimeout? 1s are chanching on 0, bottom 0s are changing on 1.
-// * How to stop (freeze) the piece when it is on the bottom? function check if it is bottom line?
-// * How to detect collision with bottom row?
-// *
+// / How to detect collision with bottom row? fuctionn to check if is possible to move down.
+// / How to stop (freeze) the piece when it is on the bottom? function check if it is bottom line?
+
 // * Create one block - use matrix.
 // * Create array with seven different shapes of blocks - 'tetriminos'
 // * Create array with seven different colours. Will choose them randomly.
@@ -37,6 +37,7 @@ function init() {
 
   const gridColumns = 10
   const gridRows = 20
+  let gameSpeed = 200
 
   // Create a Grid width = 12, height 20 - grid should refresh. setTimeout? function to create grid.
   // playfield - contains a picture of a grid on a timebeing. Every time when we change smth it is building new grid with changes.
@@ -79,29 +80,47 @@ function init() {
   }
   createNewGrid()
   // * ---> MOVE BLOCK, FUNCTION <--- * //
-  //if we start checking from top to bottom - firs 1 is changing on 0, when we are checking new row we are cganging the same 1 on 0, creating a bug. We need to check from bottom to top. Remove, define, add new position.
-  function moveBlockDown() {
+  // we need a function to check if block can move down
+  function canMoveDown() {
     for (let y = gridRows - 1; y >= 0; y--) {
       for (let x = 0; x < gridColumns; x++) {
         if (playField[y][x] === 1) {
-          playField[y + 1][x] = 1
-          playField[y][x] = 0
+          if (y === gridRows - 1) {
+            return false
+          }
         }
       }
+    }
+    return true
+  }
+
+  function moveBlockDown() {
+    if (canMoveDown()) {
+      //if we start checking from top to bottom - firs 1 is changing on 0, when we are checking new row we are cganging the same 1 on 0, creating a bug. We need to check from bottom to top. Remove, define, add new position.
+      for (let y = gridRows - 1; y >= 0; y--) {
+        for (let x = 0; x < gridColumns; x++) {
+          if (playField[y][x] === 1) {
+            playField[y + 1][x] = 1
+            playField[y][x] = 0
+          }
+        }
+      }
+    } else {
+      return false
     }
   }
 
   // * ---> STRAT GAME FUNCTION <--- * //
   // If we will call functions moveBlockDown and creatGrid, our block will move.
-  //Function startGame with setTimeout will move block down every 1000 msec.
+  //Function startGame with setTimeout will move block down every gameSpead.
   function startGame() {
     moveBlockDown()
     createNewGrid()
     // startGame() - is not working, block immediately felling down on the bottom. we neen to add delay.
-    //we have to put another timer to move it down, because without block is doing only one movement.
-    setTimeout(startGame, 1000)
+    //we have to put another timer to move it down, because now block is moving only once.
+    setTimeout(startGame, gameSpeed)
   }
-  setTimeout(startGame, 1000)
+  setTimeout(startGame, gameSpeed)
 
   // function createBlock() {
   //     // for (let y = 0; y < gridRows; y++) {
