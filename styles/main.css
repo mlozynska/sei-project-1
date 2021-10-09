@@ -1,3 +1,8 @@
+body {
+  margin: 0;
+  /* background: #000; */
+}
+
 .header {
   color: blue;
   font-weight: bold;
@@ -11,28 +16,37 @@
   justify-content: space-evenly;
   width: 380px;
   margin-bottom: 30px;
+  color: black;
+  font-size: 45px;
 }
+
 .grid-wrapper {
   width: 380px;
+  height: 640px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  width: 380px;
-}
 
-.grid div {
-  width: 33px;
-  height: 33px;
-  border: 1px solid lightgrey;
-  color: black;
-  font-size: 10px;
-  text-align: center;
+.grid {
+  width: 320px;
+  height: 640px;
+  margin: 100px auto 0;
+  border: 10px solid silver;
+  font-size: 0;
 }
 
 .cell {
+  width: 30px;
+  height: 30px;
+  border: 1px solid silver;
+  display: inline-block;
+}
+
+.movingCell {
+  background-color: blue;
+}
+
+.fixedCell {
+  background-color: green;
 }
