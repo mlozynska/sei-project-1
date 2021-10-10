@@ -40,7 +40,7 @@ function init() {
 
   const gridColumns = 10
   const gridRows = 20
-  let gameSpeed = 200
+  let gameSpeed = 1000
 
   // Create a Grid width = 12, height 20 - grid should refresh. setTimeout? function to create grid.
   // playfield - contains a picture of a grid on a timebeing. Every time when we change smth it is building new grid with changes.
@@ -85,7 +85,8 @@ function init() {
     grid.innerHTML = gridInnerText
   }
   createNewGrid()
-  // * ---> MOVE BLOCK, FUNCTION <--- * //
+
+  // * ---> MOVE BLOCK, MOVE FUNCTION, FREEZE FUNCTION <--- * //
   // we need a function to check if block can move down
   function canMoveDown() {
     for (let y = gridRows - 1; y >= 0; y--) {
@@ -100,6 +101,19 @@ function init() {
     return true
   }
 
+  function freezeBlock() {
+    for (let y = gridRows - 1; y >= 0; y--) {
+      for (let x = 0; x < gridColumns; x++) {
+        if (playField[y][x] === 1) {
+          // block freezed and changed color to yellow
+          playField[y][x] = 2
+        }
+      }
+    }
+    playField[0] = [0, 0, 0, 0, 0, 1, 0, 0, 0, 0]
+    playField[1] = [0, 0, 0, 0, 1, 1, 1, 0, 0, 0]
+  }
+
   function moveBlockDown() {
     if (canMoveDown()) {
       //if we start checking from top to bottom - firs 1 is changing on 0, when we are checking new row we are cganging the same 1 on 0, creating a bug. We need to check from bottom to top. Remove, define, add new position.
@@ -112,11 +126,46 @@ function init() {
         }
       }
     } else {
-      return false
+      // if block can`t go domn, we have to freeze it.
+      freezeBlock()
     }
   }
 
-  // * ---> STRAT GAME FUNCTION <--- * //
+  // * ---> KEY CONTROL <--- * //
+  // function onKeyRight(event) {
+  //
+  //   console.log(key)
+  // }
+  // document.addEventListener('keyright', onKeyRight)
+  function handleKeyUp(event) {
+    const key = event.keyCode
+    if (key === 37) {
+      // Move left
+      console.log('LEFT')
+    } else if (key === 39) {
+      console.log('RIGHT')
+    } else if (key === 40) {
+      console.log('DOWN')
+    }
+  }
+  document.addEventListener('keyup', handleKeyUp)
+
+  // function moveBlock(event) {
+  //   const key = document.event.keyCode
+  //   console.log(key)
+
+  //   if (key === 39) {
+  //     console.log('RIGHT')
+  //     for (let y = gridRows - 1; y >= 0; y--) {
+  //       for (let x = 0; x < gridColumns; x++) {
+  //         playField[y][x + 1]
+  //       }
+  //     }
+  //   }
+  // }
+  // moveBlock()
+
+  // * ---> START GAME FUNCTION <--- * //
   // If we will call functions moveBlockDown and creatGrid, our block will move.
   //Function startGame with setTimeout will move block down every gameSpead.
   function startGame() {
