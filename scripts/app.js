@@ -40,14 +40,14 @@ function init() {
 
   const gridColumns = 10
   const gridRows = 20
-  let gameSpeed = 1000
+  let gameSpeed = 500
 
   // Create a Grid width = 12, height 20 - grid should refresh. setTimeout? function to create grid.
   // playfield - contains a picture of a grid on a timebeing. Every time when we change smth it is building new grid with changes.
   let playField = [
-    [0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 1, 1, 0, 0, 0],
+    [0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 1, 1, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -131,20 +131,46 @@ function init() {
     }
   }
 
-  // * ---> KEY CONTROL <--- * //
-  // function onKeyRight(event) {
-  //
-  //   console.log(key)
-  // }
-  // document.addEventListener('keyright', onKeyRight)
+  // * ---> KEY CONTROL, FUNCTIONS <--- * //
+
+  function canMoveLeft() {
+    for (let y = gridRows - 1; y >= 0; y--) {
+      for (let x = 0; x < gridColumns; x++) {
+        if (playField[y][x] === 1) {
+          // if block already moving on x===0, block can`t move left
+          if (x === 0) {
+            return false
+          }
+        }
+      }
+    }
+    return true
+  }
+  function moveBlockLeft() {
+    // Check if it is possible to move left - true or false
+    if (canMoveLeft()) {
+      for (let y = gridRows - 1; y >= 0; y--) {
+        for (let x = 0; x < gridColumns; x++) {
+          if (playField[y][x] === 1) {
+            playField[y][x - 1] = 1
+            playField[y][x] = 0
+          }
+        }
+      }
+    }
+  }
+
   function handleKeyUp(event) {
     const key = event.keyCode
     if (key === 37) {
       // Move left
+      moveBlockLeft()
       console.log('LEFT')
     } else if (key === 39) {
+      // Move right
       console.log('RIGHT')
     } else if (key === 40) {
+      // Move down
       console.log('DOWN')
     }
   }
