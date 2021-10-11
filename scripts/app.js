@@ -64,8 +64,8 @@ function init() {
   ]
   let activeBlock = {
     // block coordinates
-    x: 5,
-    y: 0,
+    x: 3,
+    y: 4,
     // we will rotate our block inside the shape
     shape: [
       [1, 1, 1],
@@ -110,15 +110,29 @@ function init() {
       [0, 0, 0],
     ],
   }
+
+  function removeActiveBlock() {
+    for (let y = 0; y < gridRows; y++) {
+      for (let x = 0; x < gridColumns; x++) {
+        if (playField[y][x] === 1) {
+          playField[y][x] = 0
+        }
+      }
+    }
+  }
+
   function addActiveBlock() {
+    // before adding new block we need to remove preveious on
+    removeActiveBlock()
     // add active block to the grid before createNewGrid.
     // we have to loop through activeBlock shape
     for (let y = 0; y < activeBlock.shape.length; y++) {
       for (let x = 0; x < activeBlock.shape[y].length; x++) {
         // check if there are any 1s in ActiveBlock
         if (activeBlock.shape[y][x] === 1) {
-          // coordinates of activeBlock = activeBlock.shape[x][y]
-          playField[activeBlock.y][activeBlock.x] = activeBlock.shape[y][x]
+          // coordinates of activeBlock( y=o, x=5) plus y and x (to prevent creation of whole block on one cell) = activeBlock.shape[x][y]
+          playField[activeBlock.y + y][activeBlock.x + x] =
+            activeBlock.shape[y][x]
         }
       }
     }
@@ -152,21 +166,6 @@ function init() {
     return blocks[possibleBlockKey[randomKeyNum]]
   }
 
-  // * ---> MOVE BLOCK, MOVE FUNCTION, FREEZE FUNCTION <--- * //
-  // we need a function to check if block can move down
-  function canMoveDown() {
-    for (let y = gridRows - 1; y >= 0; y--) {
-      for (let x = 0; x < gridColumns; x++) {
-        if (playField[y][x] === 1) {
-          if (y === gridRows - 1 || playField[y + 1][x] === 2) {
-            return false
-          }
-        }
-      }
-    }
-    return true
-  }
-
   function checkLines() {
     let removeRow = true
     for (let y = 0; y < gridRows; y++) {
@@ -195,99 +194,56 @@ function init() {
       }
     }
     checkLines()
-    // When block freezed, we need to call new one.
-    playField[0] = [0, 0, 0, 0, 1, 1, 0, 0, 0, 0]
-    playField[1] = [0, 0, 0, 0, 1, 1, 0, 0, 0, 0]
   }
 
-  function moveBlockDown() {
-    if (canMoveDown()) {
-      //if we start checking from top to bottom - firs 1 is changing on 0, when we are checking new row we are cganging the same 1 on 0, creating a bug. We need to check from bottom to top. Remove, define, add new position.
-      for (let y = gridRows - 1; y >= 0; y--) {
-        for (let x = 0; x < gridColumns; x++) {
-          if (playField[y][x] === 1) {
-            playField[y + 1][x] = 1
-            playField[y][x] = 0
-          }
-        }
-      }
-    } else {
-      // if block can`t go domn, we have to freeze it.
-      freezeBlock()
-    }
-  }
-
-  // * ---> KEY CONTROL, FUNCTIONS <--- * //
-  // * // MOVE LEFT ***********************
-  function canMoveLeft() {
-    for (let y = gridRows - 1; y >= 0; y--) {
-      for (let x = 0; x < gridColumns; x++) {
-        if (playField[y][x] === 1) {
-          // if block already moving on x===0, block can`t move left
-          if (x === 0 || playField[y][x - 1] === 2) {
-            return false
-          }
-        }
-      }
-    }
-    return true
-  }
-  function moveBlockLeft() {
-    // Check if it is possible to move left - true or false
-    if (canMoveLeft()) {
-      for (let y = gridRows - 1; y >= 0; y--) {
-        for (let x = 0; x < gridColumns; x++) {
-          if (playField[y][x] === 1) {
-            playField[y][x - 1] = 1
-            playField[y][x] = 0
-          }
-        }
-      }
-    }
-  }
-  // * // MOVE RIGHT ***********************
-  function canMoveRight() {
-    for (let y = gridRows - 1; y >= 0; y--) {
-      for (let x = 0; x < gridColumns; x++) {
-        if (playField[y][x] === 1) {
-          // if block already moving on x===gridColumn -1, block can`t move left
-          if (x === gridColumns - 1 || playField[y][x + 1] === 2) {
-            return false
-          }
-        }
-      }
-    }
-    return true
-  }
-  function moveBlockRight() {
-    // Check if it is possible to move right - true or false
-    if (canMoveRight()) {
-      for (let y = gridRows - 1; y >= 0; y--) {
-        for (let x = gridColumns - 1; x >= 0; x--) {
-          if (playField[y][x] === 1) {
-            playField[y][x + 1] = 1
-            playField[y][x] = 0
-          }
-        }
-      }
-    }
-  }
   // * // HANDLE KEYUP ***********************
+  function canBlockMove() {
+    // function to check if block has any collisions(checking a block not whole grid)
+    for (let y = 0; y < activeBlock.shape.length; y++) {
+      for (let x = 0; x < activeBlock.shape[y].length; x++) {
+        // if block's cell = 1 and row+1 - undefind, block has bottom collision
+        if (
+          activeBlock.shape[y][x] &&
+          (playField[activeBlock.y + y] === undefined ||
+            playField[activeBlock.y + y][activeBlock.x + x] === undefined)
+        ) {
+          return true
+        }
+      }
+    }
+    return false
+  }
+
   function handleKeyUp(event) {
     const key = event.keyCode
     if (key === 37) {
-      // Move left
-      moveBlockLeft()
       console.log('LEFT')
+      // Move left - take away 1 from x coordinate - move for one left
+      activeBlock.x -= 1
+      if (canBlockMove()) {
+        activeBlock.x += 1
+      }
     } else if (key === 39) {
-      // Move right
-      moveBlockRight()
       console.log('RIGHT')
+      // Move right - add 1 to x coordinate - move for one right
+      activeBlock.x += 1
+      if (canBlockMove()) {
+        activeBlock.x -= 1
+      }
     } else if (key === 40) {
-      // Move down - adding function moveBlockDown.
-      moveBlockDown()
+      // Move down - take away 1 from y coordinate - move for one down
       console.log('DOWN')
+      activeBlock.y += 1
+      if (canBlockMove()) {
+        activeBlock.y -= 1
+        // block freezing when it has bottom colision
+        freezeBlock()
+        //we need to add new activeBlock
+        activeBlock.y = 0
+      }
     }
+    addActiveBlock()
+    createNewGrid()
   }
   document.addEventListener('keyup', handleKeyUp)
 
@@ -305,4 +261,5 @@ function init() {
   // }
   // setTimeout(startGame, gameSpeed)
 }
+
 window.addEventListener('DOMContentLoaded', init)
