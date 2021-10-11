@@ -8,14 +8,13 @@
 // / how to detect freezed pices and stop moving the block.
 // / How to connect left/right moves to the keybord?
 // / How to detect collision with a wall, and to stop block to run out of the grid. functions canMoveRight? canMoveLeft?
+// * How to make the row to disappear? How to find that all cells of a row are filled in?
 
 // * Create one block - use matrix.
 // * Create array with seven different shapes of blocks - 'tetriminos'
 // * Create array with seven different colours. Will choose them randomly.
 // * Random block appears on a top
-// *
-// *
-// * How to make the row to disappear? How to find that all cells of a row are filled in? All 1s?
+
 // * ROTATION
 // * How to connect rotation to the keybord?
 // * How to rotate near the wall?
@@ -37,7 +36,7 @@ function init() {
 
   const gridColumns = 10
   const gridRows = 20
-  let gameSpeed = 500
+  let gameSpeed = 300
 
   // Create a Grid width = 12, height 20 - grid should refresh. setTimeout? function to create grid.
   // playfield - contains a picture of a grid on a timebeing. Every time when we change smth it is building new grid with changes.
@@ -60,8 +59,8 @@ function init() {
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 2, 2, 0, 0, 0],
-    [0, 0, 0, 0, 0, 2, 2, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 2, 2, 0, 0],
+    [0, 0, 0, 0, 0, 0, 2, 2, 0, 0],
   ]
 
   function createNewGrid() {
@@ -98,6 +97,25 @@ function init() {
     return true
   }
 
+  function checkLines() {
+    let removeRow = true
+    for (let y = 0; y < gridRows; y++) {
+      for (let x = 0; x < gridColumns; x++) {
+        if (playField[y][x] !== 2) {
+          removeRow = false
+        }
+      }
+      if (removeRow) {
+        // if a row has only 2s we can remove row with index y.
+        playField.splice(y, 1)
+        // we have to add new row.
+        playField.push([0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+      }
+      // we have to change removeRow to true, because checking next row should start from true.
+      removeRow = true
+    }
+  }
+
   function freezeBlock() {
     for (let y = gridRows - 1; y >= 0; y--) {
       for (let x = 0; x < gridColumns; x++) {
@@ -107,8 +125,10 @@ function init() {
         }
       }
     }
-    playField[0] = [0, 0, 0, 0, 0, 1, 0, 0, 0, 0]
-    playField[1] = [0, 0, 0, 0, 1, 1, 1, 0, 0, 0]
+    checkLines()
+    // When block freezed, we need to call new one.
+    playField[0] = [0, 0, 0, 0, 1, 1, 0, 0, 0, 0]
+    playField[1] = [0, 0, 0, 0, 1, 1, 0, 0, 0, 0]
   }
 
   function moveBlockDown() {
@@ -194,26 +214,12 @@ function init() {
       moveBlockRight()
       console.log('RIGHT')
     } else if (key === 40) {
-      // Move down
+      // Move down - adding function moveBlockDown.
+      moveBlockDown()
       console.log('DOWN')
     }
   }
   document.addEventListener('keyup', handleKeyUp)
-
-  // function moveBlock(event) {
-  //   const key = document.event.keyCode
-  //   console.log(key)
-
-  //   if (key === 39) {
-  //     console.log('RIGHT')
-  //     for (let y = gridRows - 1; y >= 0; y--) {
-  //       for (let x = 0; x < gridColumns; x++) {
-  //         playField[y][x + 1]
-  //       }
-  //     }
-  //   }
-  // }
-  // moveBlock()
 
   // * ---> START GAME FUNCTION <--- * //
   // If we will call functions moveBlockDown and creatGrid, our block will move.
@@ -221,8 +227,7 @@ function init() {
   function startGame() {
     moveBlockDown()
     createNewGrid()
-    // startGame() - is not working, block immediately felling down on the bottom. we neen to add delay.
-    //we have to put another timer to move it down, because now block is moving only once.
+    // startGame() - is not working, block immediately felling down on the bottom. we neen to add delay - setTimeout. We have to add another timer to move it down, because now block is moving only once.
     setTimeout(startGame, gameSpeed)
   }
   setTimeout(startGame, gameSpeed)
