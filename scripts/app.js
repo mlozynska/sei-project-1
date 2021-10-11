@@ -44,7 +44,7 @@ function init() {
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -105,7 +105,7 @@ function init() {
 
   let activeBlock = {
     // block coordinates
-    x: 0,
+    x: 4,
     y: 0,
     // we will rotate our block inside the shape
     shape: [
@@ -250,7 +250,8 @@ function init() {
         activeBlock.y -= 1
         // block freezing when it has bottom colision
         freezeBlock()
-        //we need to add new activeBlock to appear on top
+        //we need to add new activeBlock to appear on top by calling function createBlock.
+        activeBlock.shape = createBlock()
         activeBlock.y = 0
       }
     } else if (key === 38) {
@@ -268,23 +269,26 @@ function init() {
   // If we will call functions addActiveBlock and creatNewGrid, our block will move.
   //Function startGame with setTimeout will move block down every gameSpead.
   // * // * //*
-  function startGame() {
-    // pushing first block
-    activeBlock.y += 1
-    if (cantBlockMove()) {
-      //if there is a colision we put block one step back
-      activeBlock.y -= 1
-      // block freezing when it has bottom colision
-      freezeBlock()
-      //we need to add new activeBlock to appear on top
-      activeBlock.y = 0
-    }
-    addActiveBlock()
-    createNewGrid()
-    // startGame() - is not working, block immediately felling down on the bottom. we neen to add delay - setTimeout. We have to add another timer to move it down, because now block is moving only once.
-    setTimeout(startGame, gameSpeed)
-  }
-  setTimeout(startGame, gameSpeed)
+  // function startGame() {
+  //   // pushing first block
+  //   activeBlock.y += 1
+  //   if (cantBlockMove()) {
+  //     //if there is a colision we put block one step back
+  //     activeBlock.y -= 1
+  //     // block freezing when it has bottom colision
+  //     freezeBlock()
+  //     //we need to add new activeBlock to appear on top
+  //     activeBlock.shape = createBlock()
+  //     // Block is starting on top row, on 4 column
+  //     activeBlock.y = 0
+  //     activeBlock.x = 3
+  //   }
+  //   addActiveBlock()
+  //   createNewGrid()
+  //   // startGame() - is not working, block immediately felling down on the bottom. we neen to add delay - setTimeout. We have to add another timer to move it down, because now block is moving only once.
+  //   setTimeout(startGame, gameSpeed)
+  // }
+  // setTimeout(startGame, gameSpeed)
 }
 
 window.addEventListener('DOMContentLoaded', init)
