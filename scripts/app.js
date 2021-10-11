@@ -8,10 +8,10 @@
 // / how to detect freezed pices and stop moving the block.
 // / How to connect left/right moves to the keybord?
 // / How to detect collision with a wall, and to stop block to run out of the grid. functions canMoveRight? canMoveLeft?
-// * How to make the row to disappear? How to find that all cells of a row are filled in?
+// / How to make the row to disappear? How to find that all cells of a row are filled in?
+// / Create one block - use matrix.
+// / Create array with seven different shapes of blocks - 'tetriminos'
 
-// * Create one block - use matrix.
-// * Create array with seven different shapes of blocks - 'tetriminos'
 // * Create array with seven different colours. Will choose them randomly.
 // * Random block appears on a top
 
@@ -39,11 +39,8 @@ function init() {
   let gameSpeed = 300
 
   // Create a Grid width = 12, height 20 - grid should refresh. setTimeout? function to create grid.
-  // playfield - contains a picture of a grid on a timebeing. Every time when we change smth it is building new grid with changes.
+  // playfield - contains a picture of a grid for the time being. Every time when we change smth it is building new grid with changes.
   let playField = [
-    [0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 1, 1, 0, 0, 2],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -59,10 +56,23 @@ function init() {
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 2, 2, 0, 0],
-    [0, 0, 0, 0, 0, 0, 2, 2, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   ]
-
+  let activeBlock = {
+    // block coordinates
+    x: 5,
+    y: 0,
+    // we will rotate our block inside the shape
+    shape: [
+      [1, 1, 1],
+      [0, 1, 0],
+      [0, 0, 0],
+    ],
+  }
   let blocks = {
     O: [
       [1, 1],
@@ -100,7 +110,19 @@ function init() {
       [0, 0, 0],
     ],
   }
-
+  function addActiveBlock() {
+    // add active block to the grid before createNewGrid.
+    // we have to loop through activeBlock shape
+    for (let y = 0; y < activeBlock.shape.length; y++) {
+      for (let x = 0; x < activeBlock.shape[y].length; x++) {
+        // check if there are any 1s in ActiveBlock
+        if (activeBlock.shape[y][x] === 1) {
+          // coordinates of activeBlock = activeBlock.shape[x][y]
+          playField[activeBlock.y][activeBlock.x] = activeBlock.shape[y][x]
+        }
+      }
+    }
+  }
   function createNewGrid() {
     let gridInnerText = ''
     for (let y = 0; y < gridRows; y++) {
@@ -118,11 +140,10 @@ function init() {
     }
     grid.innerHTML = gridInnerText
   }
-  createNewGrid()
 
   // * ---> GET NEW BLOCK <--- * //
   // randomly choosing block
-  function getBlock() {
+  function createBlock() {
     // possible key - one of seven
     const possibleBlockKey = ['O', 'I', 'S', 'Z', 'J', 'L', 'T']
     // random number from 0 to 6
@@ -251,6 +272,7 @@ function init() {
       }
     }
   }
+  // * // HANDLE KEYUP ***********************
   function handleKeyUp(event) {
     const key = event.keyCode
     if (key === 37) {
@@ -270,28 +292,17 @@ function init() {
   document.addEventListener('keyup', handleKeyUp)
 
   // * ---> START GAME FUNCTION <--- * //
+  addActiveBlock()
+  createNewGrid()
   // If we will call functions moveBlockDown and creatGrid, our block will move.
   //Function startGame with setTimeout will move block down every gameSpead.
-  function startGame() {
-    moveBlockDown()
-    createNewGrid()
-    // startGame() - is not working, block immediately felling down on the bottom. we neen to add delay - setTimeout. We have to add another timer to move it down, because now block is moving only once.
-    setTimeout(startGame, gameSpeed)
-  }
-  setTimeout(startGame, gameSpeed)
-
-  // function createBlock() {
-  //     // for (let y = 0; y < gridRows; y++) {
-  //     //   for (let x = 0; x < gridColumns; x++) {
-  //     //     if (playField[y][x] === 1) {
-  //     //       .className = 'blue'
-  //     //     } else {
-  //     //       .className = 'cell'
-  //     //     }
-  //     //   }
-  //     // }
-  //   }
-
-  //   // createBlock()
+  // * // * //*
+  // function startGame() {
+  //   moveBlockDown()
+  //   createNewGrid()
+  //   // startGame() - is not working, block immediately felling down on the bottom. we neen to add delay - setTimeout. We have to add another timer to move it down, because now block is moving only once.
+  //   setTimeout(startGame, gameSpeed)
+  // }
+  // setTimeout(startGame, gameSpeed)
 }
 window.addEventListener('DOMContentLoaded', init)
