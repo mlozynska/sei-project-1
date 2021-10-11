@@ -62,17 +62,7 @@ function init() {
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   ]
-  let activeBlock = {
-    // block coordinates
-    x: 3,
-    y: 4,
-    // we will rotate our block inside the shape
-    shape: [
-      [1, 1, 1],
-      [0, 1, 0],
-      [0, 0, 0],
-    ],
-  }
+
   let blocks = {
     O: [
       [1, 1],
@@ -111,6 +101,18 @@ function init() {
     ],
   }
 
+  // * ---> ACTIVE BLOCK <--- * //
+
+  let activeBlock = {
+    // block coordinates
+    x: 0,
+    y: 0,
+    // we will rotate our block inside the shape
+    shape: [
+      [1, 1],
+      [1, 1],
+    ],
+  }
   function removeActiveBlock() {
     for (let y = 0; y < gridRows; y++) {
       for (let x = 0; x < gridColumns; x++) {
@@ -137,6 +139,10 @@ function init() {
       }
     }
   }
+  function rotateActiveBlock() {
+    console.log('NOT YET!')
+  }
+
   function createNewGrid() {
     let gridInnerText = ''
     for (let y = 0; y < gridRows; y++) {
@@ -155,7 +161,7 @@ function init() {
     grid.innerHTML = gridInnerText
   }
 
-  // * ---> GET NEW BLOCK <--- * //
+  // * ---> GET BLOCK <--- * //
   // randomly choosing block
   function createBlock() {
     // possible key - one of seven
@@ -184,20 +190,9 @@ function init() {
       removeRow = true
     }
   }
-  function freezeBlock() {
-    for (let y = gridRows - 1; y >= 0; y--) {
-      for (let x = 0; x < gridColumns; x++) {
-        if (playField[y][x] === 1) {
-          // block freezed and changed color to yellow
-          playField[y][x] = 2
-        }
-      }
-    }
-    checkLines()
-  }
 
-  // * // HANDLE KEYUP ***********************
-  function canBlockMove() {
+  // * // CAN BlOCK MOVE // FREEZE BLOCK // HANDLE KEYUP ***********************
+  function cantBlockMove() {
     // function to check if block has any collisions(checking a block not whole grid)
     for (let y = 0; y < activeBlock.shape.length; y++) {
       for (let x = 0; x < activeBlock.shape[y].length; x++) {
@@ -216,13 +211,25 @@ function init() {
     return false
   }
 
+  function freezeBlock() {
+    for (let y = gridRows - 1; y >= 0; y--) {
+      for (let x = 0; x < gridColumns; x++) {
+        if (playField[y][x] === 1) {
+          // block freezed and changed color to yellow
+          playField[y][x] = 2
+        }
+      }
+    }
+    checkLines()
+  }
+
   function handleKeyUp(event) {
     const key = event.keyCode
     if (key === 37) {
       console.log('LEFT')
       // Move left - take away 1 from x coordinate - move for one left
       activeBlock.x -= 1
-      if (canBlockMove()) {
+      if (cantBlockMove()) {
         //if there is a colision we put block one step back
         activeBlock.x += 1
       }
@@ -230,7 +237,7 @@ function init() {
       console.log('RIGHT')
       // Move right - add 1 to x coordinate - move for one right
       activeBlock.x += 1
-      if (canBlockMove()) {
+      if (cantBlockMove()) {
         //if there is a colision we put block one step back
         activeBlock.x -= 1
       }
@@ -238,7 +245,7 @@ function init() {
       // Move down - take away 1 from y coordinate - move for one down
       console.log('DOWN')
       activeBlock.y += 1
-      if (canBlockMove()) {
+      if (cantBlockMove()) {
         //if there is a colision we put block one step back
         activeBlock.y -= 1
         // block freezing when it has bottom colision
@@ -246,6 +253,9 @@ function init() {
         //we need to add new activeBlock to appear on top
         activeBlock.y = 0
       }
+    } else if (key === 38) {
+      console.log('ROTATE')
+      rotateActiveBlock()
     }
     addActiveBlock()
     createNewGrid()
@@ -253,18 +263,28 @@ function init() {
   document.addEventListener('keyup', handleKeyUp)
 
   // * ---> START GAME FUNCTION <--- * //
-  addActiveBlock()
+
   createNewGrid()
-  // If we will call functions moveBlockDown and creatGrid, our block will move.
+  // If we will call functions addActiveBlock and creatNewGrid, our block will move.
   //Function startGame with setTimeout will move block down every gameSpead.
   // * // * //*
-  // function startGame() {
-  //   moveBlockDown()
-  //   createNewGrid()
-  //   // startGame() - is not working, block immediately felling down on the bottom. we neen to add delay - setTimeout. We have to add another timer to move it down, because now block is moving only once.
-  //   setTimeout(startGame, gameSpeed)
-  // }
-  // setTimeout(startGame, gameSpeed)
+  function startGame() {
+    // pushing first block
+    activeBlock.y += 1
+    if (cantBlockMove()) {
+      //if there is a colision we put block one step back
+      activeBlock.y -= 1
+      // block freezing when it has bottom colision
+      freezeBlock()
+      //we need to add new activeBlock to appear on top
+      activeBlock.y = 0
+    }
+    addActiveBlock()
+    createNewGrid()
+    // startGame() - is not working, block immediately felling down on the bottom. we neen to add delay - setTimeout. We have to add another timer to move it down, because now block is moving only once.
+    setTimeout(startGame, gameSpeed)
+  }
+  setTimeout(startGame, gameSpeed)
 }
 
 window.addEventListener('DOMContentLoaded', init)
