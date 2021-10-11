@@ -44,7 +44,7 @@ function init() {
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -202,10 +202,12 @@ function init() {
     for (let y = 0; y < activeBlock.shape.length; y++) {
       for (let x = 0; x < activeBlock.shape[y].length; x++) {
         // if block's cell = 1 and row+1 - undefind, block has bottom collision
+        // OR left/right undefined // OR colision with other blocks
         if (
           activeBlock.shape[y][x] &&
           (playField[activeBlock.y + y] === undefined ||
-            playField[activeBlock.y + y][activeBlock.x + x] === undefined)
+            playField[activeBlock.y + y][activeBlock.x + x] === undefined ||
+            playField[activeBlock.y + y][activeBlock.x + x] === 2)
         ) {
           return true
         }
@@ -221,6 +223,7 @@ function init() {
       // Move left - take away 1 from x coordinate - move for one left
       activeBlock.x -= 1
       if (canBlockMove()) {
+        //if there is a colision we put block one step back
         activeBlock.x += 1
       }
     } else if (key === 39) {
@@ -228,6 +231,7 @@ function init() {
       // Move right - add 1 to x coordinate - move for one right
       activeBlock.x += 1
       if (canBlockMove()) {
+        //if there is a colision we put block one step back
         activeBlock.x -= 1
       }
     } else if (key === 40) {
@@ -235,10 +239,11 @@ function init() {
       console.log('DOWN')
       activeBlock.y += 1
       if (canBlockMove()) {
+        //if there is a colision we put block one step back
         activeBlock.y -= 1
         // block freezing when it has bottom colision
         freezeBlock()
-        //we need to add new activeBlock
+        //we need to add new activeBlock to appear on top
         activeBlock.y = 0
       }
     }
