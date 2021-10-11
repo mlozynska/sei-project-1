@@ -63,6 +63,44 @@ function init() {
     [0, 0, 0, 0, 0, 0, 2, 2, 0, 0],
   ]
 
+  let blocks = {
+    O: [
+      [1, 1],
+      [1, 1],
+    ],
+    I: [
+      [0, 1, 0, 0],
+      [0, 1, 0, 0],
+      [0, 1, 0, 0],
+      [0, 1, 0, 0],
+    ],
+    S: [
+      [0, 1, 1],
+      [1, 1, 0],
+      [0, 0, 0],
+    ],
+    Z: [
+      [1, 1, 0],
+      [0, 1, 1],
+      [0, 0, 0],
+    ],
+    J: [
+      [1, 0, 0],
+      [1, 1, 1],
+      [0, 0, 0],
+    ],
+    L: [
+      [0, 0, 1],
+      [1, 1, 1],
+      [0, 0, 0],
+    ],
+    T: [
+      [1, 1, 1],
+      [0, 1, 0],
+      [0, 0, 0],
+    ],
+  }
+
   function createNewGrid() {
     let gridInnerText = ''
     for (let y = 0; y < gridRows; y++) {
@@ -81,6 +119,17 @@ function init() {
     grid.innerHTML = gridInnerText
   }
   createNewGrid()
+
+  // * ---> GET NEW BLOCK <--- * //
+  // randomly choosing block
+  function getBlock() {
+    // possible key - one of seven
+    const possibleBlockKey = ['O', 'I', 'S', 'Z', 'J', 'L', 'T']
+    // random number from 0 to 6
+    const randomKeyNum = Math.floor(Math.random() * 7)
+    // returning one of seven blocks
+    return blocks[possibleBlockKey[randomKeyNum]]
+  }
 
   // * ---> MOVE BLOCK, MOVE FUNCTION, FREEZE FUNCTION <--- * //
   // we need a function to check if block can move down
@@ -115,7 +164,6 @@ function init() {
       removeRow = true
     }
   }
-
   function freezeBlock() {
     for (let y = gridRows - 1; y >= 0; y--) {
       for (let x = 0; x < gridColumns; x++) {
