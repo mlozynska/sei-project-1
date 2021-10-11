@@ -43,7 +43,7 @@ function init() {
   let playField = [
     [0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 1, 1, 0, 0, 0],
+    [0, 0, 0, 0, 0, 1, 1, 0, 0, 2],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -108,8 +108,8 @@ function init() {
       if (removeRow) {
         // if a row has only 2s we can remove row with index y.
         playField.splice(y, 1)
-        // we have to add new row.
-        playField.push([0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+        // we have to add new row. index 0(on a top of the grid) we delete 0 and add new empty row and it is pushing everything down.
+        playField.splice(0, 0, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
       }
       // we have to change removeRow to true, because checking next row should start from true.
       removeRow = true
