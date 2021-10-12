@@ -37,6 +37,7 @@ function init() {
   const gridRows = 20
   let gameSpeed = 300
   let score = 0
+  let level = 1
 
   // Create a Grid width = 12, height 20 - grid should refresh. setTimeout? function to create grid.
   // playfield - contains a picture of a grid for the time being. Every time when we change smth it is building new grid with changes.
@@ -209,6 +210,14 @@ function init() {
       score += 120
     }
     scoreScreen.innerText = score
+    if (score >= 20) {
+      level += 1
+      gameSpeed = 100
+    } else if (score >= 30) {
+      level += 1
+      gameSpeed = 50
+    }
+    levelScreen.innerText = level
   }
 
   // * // CAN BlOCK MOVE // FREEZE BLOCK // HANDLE KEYUP ***********************
