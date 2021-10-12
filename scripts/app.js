@@ -148,18 +148,33 @@ function init() {
     activeBlock.shape = activeBlock.shape.map((row, index) =>
       activeBlock.shape.map((item) => item[index]).reverse()
     )
+    // if (cantBlockMove()) {
+    //   // if we can't rotate shape near the walls, we have to define shape before rotation.
+    //   activeBlock.shape = beforeRotationActiveBlock
+    // }
   }
 
   function createNewGrid() {
     let gridInnerText = ''
+    const blockColours = [
+      'red',
+      'blue',
+      'orange',
+      'green',
+      'lilac',
+      'darkgreen',
+      'pink',
+    ]
+    const randomColour = Math.floor(Math.random(blockColours) * 7)
+    const movingCell = blockColours[randomColour]
     for (let y = 0; y < gridRows; y++) {
       for (let x = 0; x < gridColumns; x++) {
         if (playField[y][x] === 1) {
           // if on a playingField there are 1s, they will be coloured in blue. adding class movingCell.
-          gridInnerText += '<div class="cell movingCell"></div>'
+          gridInnerText += `<div class="cell ${movingCell}"></div>`
         } else if (playField[y][x] === 2) {
           // if on a playingField there are 2s, they will be coloured in yellow. adding class freezedCell.
-          gridInnerText += '<div class="cell freezedCell"></div>'
+          gridInnerText += `<div class="cell freezedCell"></div>`
         } else {
           gridInnerText += '<div class="cell"></div>'
         }
@@ -215,14 +230,24 @@ function init() {
       score += 120
     }
     scoreScreen.innerText = score
-    if (score >= 20) {
-      level += 1
-      gameSpeed = 300
-    } else if (score >= 30) {
-      level += 1
-      gameSpeed = 200
-    }
-    levelScreen.innerText = level
+    // if (score >= 20) {
+    //   level += 1
+    //   gameSpeed = 400
+    // } else if (score >= 500) {
+    //   level += 1
+    //   gameSpeed = 300
+    // } else if (score >= 1000) {
+    //   level += 1
+    //   gameSpeed = 200
+    // } else if (score >= 2000) {
+    //   level += 1
+    //   gameSpeed = 100
+    // } else if (score >= 5000) {
+    //   level += 1
+    //   gameSpeed = 50
+    // }
+
+    // levelScreen.innerText = level
   }
 
   // * // CAN BlOCK MOVE // FREEZE BLOCK // HANDLE KEYUP ***********************

@@ -1,16 +1,16 @@
 body {
   margin: 0;
   margin-top: 75px;
-  font-family: Arial, Helvetica, sans-serif;
-  /* background-color: black; */
+  font-family: 'VT323', sans-serif;
+  background-color: black;
 }
 header {
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 .header {
-  color: blue;
+  color: #4f86f7;
   font-weight: bold;
-  font-size: 75px;
+  font-size: 100px;
   text-align: center;
   width: 380px;
   margin: auto;
@@ -20,10 +20,10 @@ header {
   justify-content: space-evenly;
   width: 380px;
   margin-bottom: 30px;
-  color: black;
-  font-size: 40px;
+  color: cornsilk;
+  font-size: 45px;
   margin: auto;
-  margin-top: 50px;
+  margin-top: 30px;
 }
 
 .grid-wrapper {
@@ -40,7 +40,7 @@ header {
   width: 320px;
   height: 640px;
   margin: 100px auto 0;
-  border: 10px solid silver;
+  border: 10px solid #fbe870;
   font-size: 0;
   padding-top: 0;
   margin-top: 0;
@@ -49,14 +49,38 @@ header {
 .cell {
   width: 30px;
   height: 30px;
-  border: 1px solid silver;
+  border: 1px dotted darkgrey;
   display: inline-block;
 }
 
-.movingCell {
+/* .movingCell {
   background-color: blue;
-}
+} */
 
 .freezedCell {
-  background-color: yellow;
+  background-color: #fbe870;
+  /* rgb(238, 255, 0); */
+}
+
+.blue {
+  background-color: #76d7ea;
+}
+.orange {
+  background-color: #ff8833;
+}
+.green {
+  background-color: #29ab87;
+  /* rgb(54, 207, 49); */
+}
+.red {
+  background-color: #ed0a3f;
+}
+.lilac {
+  background-color: #c9a0dc;
+}
+.darkgreen {
+  background-color: #01786f;
+}
+.pink {
+  background-color: #fc80a5;
 }
