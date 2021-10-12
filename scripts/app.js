@@ -35,7 +35,7 @@ function init() {
 
   const gridColumns = 10
   const gridRows = 20
-  let gameSpeed = 300
+  let gameSpeed = 400
   let score = 0
   let level = 1
 
@@ -143,6 +143,11 @@ function init() {
 
   function rotateActiveBlock() {
     console.log('NOT YET!')
+    // we have to save block before rotation
+    const beforeRotationActiveBlock = activeBlock.shape
+    activeBlock.shape = activeBlock.shape.map((row, index) =>
+      activeBlock.shape.map((item) => item[index]).reverse()
+    )
   }
 
   function createNewGrid() {
@@ -212,10 +217,10 @@ function init() {
     scoreScreen.innerText = score
     if (score >= 20) {
       level += 1
-      gameSpeed = 100
+      gameSpeed = 300
     } else if (score >= 30) {
       level += 1
-      gameSpeed = 50
+      gameSpeed = 200
     }
     levelScreen.innerText = level
   }
@@ -317,7 +322,7 @@ function init() {
     // startGame() - is not working, block immediately felling down on the bottom. we neen to add delay - setTimeout. We have to add another timer to move it down, because now block is moving only once.
     setTimeout(startGame, gameSpeed)
   }
-  // setTimeout(startGame, gameSpeed)
+  setTimeout(startGame, gameSpeed)
 }
 
 window.addEventListener('DOMContentLoaded', init)
