@@ -10,33 +10,33 @@
 // / How to detect collision with a wall, and to stop block to run out of the grid. functions canMoveRight? canMoveLeft?
 // / How to make the row to disappear? How to find that all cells of a row are filled in?
 // / Create one block - use matrix.
-// / Create array with seven different shapes of blocks - 'tetriminos'
+// / Create array with seven different shapes of blocks - 'tetriminos
 
 // * Create array with seven different colours. Will choose them randomly.
-// * Random block appears on a top
+// * Random block appears in a center on a top row
 
 // * ROTATION
-// * How to connect rotation to the keybord?
+// / How to connect rotation to the keybord?
 // * How to rotate near the wall?
 
 //? BONUS TASKS
 // * Detect colision with top? While loop - drop down pieces untill some piece is higher || equal the top of the grid.
 // * It is possible to complete up to four lines simultaneously with the use of the I-shaped tetrimino; this move is called a "Tetris", and is the basis of the game's title.
 // * Create the way of storing high score.
-// * Rotation of blocks - combination of a pair of keys
 // * How to move to the next level, when playeyer accumulates special ammount of points.
 // * increase the speed with each level
 // * How to reset the game?
 
 function init() {
   // * ---> GRID, FUNCTION CREATE NEW GRID <--- * //
-  const score = document.querySelector('score')
-  const level = document.querySelector('level')
+  const scoreScreen = document.getElementById('scorespan')
+  const levelScreen = document.getElementById('levelspan')
   const grid = document.querySelector('.grid')
 
   const gridColumns = 10
   const gridRows = 20
   let gameSpeed = 300
+  let score = 0
 
   // Create a Grid width = 12, height 20 - grid should refresh. setTimeout? function to create grid.
   // playfield - contains a picture of a grid for the time being. Every time when we change smth it is building new grid with changes.
@@ -139,6 +139,7 @@ function init() {
       }
     }
   }
+
   function rotateActiveBlock() {
     console.log('NOT YET!')
   }
@@ -174,6 +175,7 @@ function init() {
 
   function checkLines() {
     let removeRow = true
+    let filledlines = 0
     for (let y = 0; y < gridRows; y++) {
       for (let x = 0; x < gridColumns; x++) {
         if (playField[y][x] !== 2) {
@@ -185,10 +187,28 @@ function init() {
         playField.splice(y, 1)
         // we have to add new row. index 0(on a top of the grid) we delete 0 and add new empty row and it is pushing everything down.
         playField.splice(0, 0, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+        // updating score
+        filledlines += 1
       }
       // we have to change removeRow to true, because checking next row should start from true.
       removeRow = true
     }
+    if (filledlines === 0) {
+      score += 0
+      // scoreScreen.innerText = score
+    } else if (filledlines === 1) {
+      score += 10
+      // scoreScreen.innerText = score
+    } else if (filledlines === 2) {
+      score += 30
+      // scoreScreen.innerText = score
+    } else if (filledlines === 3) {
+      score += 60
+      // scoreScreen.innerText = score
+    } else if (filledlines === 4) {
+      score += 120
+    }
+    scoreScreen.innerText = score
   }
 
   // * // CAN BlOCK MOVE // FREEZE BLOCK // HANDLE KEYUP ***********************
@@ -269,25 +289,25 @@ function init() {
   // If we will call functions addActiveBlock and creatNewGrid, our block will move.
   //Function startGame with setTimeout will move block down every gameSpead.
   // * // * //*
-  // function startGame() {
-  //   // pushing first block
-  //   activeBlock.y += 1
-  //   if (cantBlockMove()) {
-  //     //if there is a colision we put block one step back
-  //     activeBlock.y -= 1
-  //     // block freezing when it has bottom colision
-  //     freezeBlock()
-  //     //we need to add new activeBlock to appear on top
-  //     activeBlock.shape = createBlock()
-  //     // Block is starting on top row, on 4 column
-  //     activeBlock.y = 0
-  //     activeBlock.x = 3
-  //   }
-  //   addActiveBlock()
-  //   createNewGrid()
-  //   // startGame() - is not working, block immediately felling down on the bottom. we neen to add delay - setTimeout. We have to add another timer to move it down, because now block is moving only once.
-  //   setTimeout(startGame, gameSpeed)
-  // }
+  function startGame() {
+    // pushing first block
+    activeBlock.y += 1
+    if (cantBlockMove()) {
+      //if there is a colision we put block one step back
+      activeBlock.y -= 1
+      // block freezing when it has bottom colision
+      freezeBlock()
+      //we need to add new activeBlock to appear on top
+      activeBlock.shape = createBlock()
+      // Block is starting on top row, on 4 column
+      activeBlock.y = 0
+      activeBlock.x = 3
+    }
+    addActiveBlock()
+    createNewGrid()
+    // startGame() - is not working, block immediately felling down on the bottom. we neen to add delay - setTimeout. We have to add another timer to move it down, because now block is moving only once.
+    setTimeout(startGame, gameSpeed)
+  }
   // setTimeout(startGame, gameSpeed)
 }
 

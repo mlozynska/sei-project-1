@@ -1,14 +1,19 @@
 body {
   margin: 0;
+  margin-top: 75px;
+  font-family: Arial, Helvetica, sans-serif;
+  /* background-color: black; */
 }
-
+header {
+  margin-bottom: 10px;
+}
 .header {
   color: blue;
   font-weight: bold;
-  font-size: 50px;
+  font-size: 75px;
   text-align: center;
   width: 380px;
-  margin-bottom: 25px;
+  margin: auto;
 }
 .info {
   display: flex;
@@ -16,15 +21,19 @@ body {
   width: 380px;
   margin-bottom: 30px;
   color: black;
-  font-size: 45px;
+  font-size: 40px;
+  margin: auto;
+  margin-top: 50px;
 }
 
 .grid-wrapper {
   width: 380px;
-  height: 640px;
+  height: 660px;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: auto;
+  margin-top: 0;
 }
 
 .grid {
@@ -33,6 +42,8 @@ body {
   margin: 100px auto 0;
   border: 10px solid silver;
   font-size: 0;
+  padding-top: 0;
+  margin-top: 0;
 }
 
 .cell {
