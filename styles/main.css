@@ -1,4 +1,6 @@
 body {
+  display: flex;
+  flex-direction: column;
   margin: 0;
   margin-top: 75px;
   font-family: 'VT323', sans-serif;
@@ -53,13 +55,8 @@ header {
   display: inline-block;
 }
 
-/* .movingCell {
-  background-color: blue;
-} */
-
 .freezedCell {
   background-color: #fbe870;
-  /* rgb(238, 255, 0); */
 }
 
 .blue {
@@ -83,4 +80,16 @@ header {
 }
 .pink {
   background-color: #fc80a5;
+}
+
+#start {
+  width: 175px;
+  height: 100px;
+  margin: auto;
+  font-size: 45px;
+  font-weight: bold;
+  background-color: #ed0a3f;
+  margin-top: 25px;
+  /* border-radius: 45%; */
+  border-color: black;
 }

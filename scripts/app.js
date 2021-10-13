@@ -32,10 +32,11 @@ function init() {
   const scoreScreen = document.getElementById('scorespan')
   const levelScreen = document.getElementById('levelspan')
   const grid = document.querySelector('.grid')
+  const startButton = document.getElementById('start')
 
   const gridColumns = 10
   const gridRows = 20
-  let gameSpeed = 400
+  let gameSpeed = 100
   let score = 0
   let level = 1
 
@@ -70,10 +71,10 @@ function init() {
       [1, 1],
     ],
     I: [
-      [0, 1, 0, 0],
-      [0, 1, 0, 0],
-      [0, 1, 0, 0],
-      [0, 1, 0, 0],
+      [0, 0, 0, 0],
+      [1, 1, 1, 1],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
     ],
     S: [
       [0, 1, 1],
@@ -142,7 +143,6 @@ function init() {
   }
 
   function rotateActiveBlock() {
-    console.log('NOT YET!')
     // we have to save block before rotation
     const beforeRotationActiveBlock = activeBlock.shape
     activeBlock.shape = activeBlock.shape.map((row, index) =>
@@ -226,25 +226,25 @@ function init() {
           // levelScreen.innerText = level
           gameSpeed = 300
         }
-        if (score >= 40) {
+        if (score >= 140) {
+          level = 3
           // levelScreen.innerText = level
           gameSpeed = 200
-          level = 3
         }
-        if (score >= 60) {
+        if (score >= 260) {
+          level = 4
+          // levelScreen.innerText = level
+          gameSpeed = 150
+        }
+        if (score >= 380) {
+          level = 5
           // levelScreen.innerText = level
           gameSpeed = 100
-          level = 4
         }
-        if (score >= 80) {
+        if (score >= 500) {
+          level = 6
           // levelScreen.innerText = level
           gameSpeed = 75
-          level = 5
-        }
-        if (score >= 100) {
-          // levelScreen.innerText = level
-          gameSpeed = 50
-          level = 6
         }
       }
       // we have to change removeRow to true, because checking next row should start from true.
@@ -323,6 +323,18 @@ function init() {
   }
   document.addEventListener('keyup', handleKeyUp)
 
+  function moveBlockDown() {
+    // activeBlock.y += 1
+    // if (cantBlockMove()) {
+    //   //if there is a colision we put block one step back
+    //   activeBlock.y -= 1
+    //   // block freezing when it has bottom colision
+    //   freezeBlock()
+    //   //we need to add new activeBlock to appear on top by calling function createBlock.
+    //   activeBlock.shape = createBlock()
+    //   activeBlock.y = 0
+    // }
+  }
   // * ---> START GAME FUNCTION <--- * //
 
   createNewGrid()
@@ -341,14 +353,22 @@ function init() {
       activeBlock.shape = createBlock()
       // Block is starting on top row, on 4 column
       activeBlock.y = 0
-      activeBlock.x = 4
+      activeBlock.x = Math.floor((gridColumns - activeBlock.shape.length) / 2)
+    }
+    if (cantBlockMove()) {
+      return window.alert('GAME OVER!')
     }
     addActiveBlock()
     createNewGrid()
     // startGame() - is not working, block immediately felling down on the bottom. we neen to add delay - setTimeout. We have to add another timer to move it down, because now block is moving only once.
     setTimeout(startGame, gameSpeed)
   }
-  setTimeout(startGame, gameSpeed)
+
+  function handleButtonClick(event) {
+    console.log('clicked')
+    setTimeout(startGame, gameSpeed)
+  }
+  document.addEventListener('click', handleButtonClick)
 }
 
 window.addEventListener('DOMContentLoaded', init)
