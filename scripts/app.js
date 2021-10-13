@@ -210,44 +210,49 @@ function init() {
         playField.splice(0, 0, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
         // updating score
         filledlines += 1
+        if (filledlines === 0) {
+          score += 0
+        } else if (filledlines === 1) {
+          score += 10
+        } else if (filledlines === 2) {
+          score += 30
+        } else if (filledlines === 3) {
+          score += 60
+        } else if (filledlines === 4) {
+          score += 120
+        }
+        if (score >= 20) {
+          level = 2
+          // levelScreen.innerText = level
+          gameSpeed = 300
+        }
+        if (score >= 40) {
+          // levelScreen.innerText = level
+          gameSpeed = 200
+          level = 3
+        }
+        if (score >= 60) {
+          // levelScreen.innerText = level
+          gameSpeed = 100
+          level = 4
+        }
+        if (score >= 80) {
+          // levelScreen.innerText = level
+          gameSpeed = 75
+          level = 5
+        }
+        if (score >= 100) {
+          // levelScreen.innerText = level
+          gameSpeed = 50
+          level = 6
+        }
       }
       // we have to change removeRow to true, because checking next row should start from true.
       removeRow = true
     }
-    if (filledlines === 0) {
-      score += 0
-      // scoreScreen.innerText = score
-    } else if (filledlines === 1) {
-      score += 10
-      // scoreScreen.innerText = score
-    } else if (filledlines === 2) {
-      score += 30
-      // scoreScreen.innerText = score
-    } else if (filledlines === 3) {
-      score += 60
-      // scoreScreen.innerText = score
-    } else if (filledlines === 4) {
-      score += 120
-    }
-    scoreScreen.innerText = score
-    // if (score >= 20) {
-    //   level += 1
-    //   gameSpeed = 400
-    // } else if (score >= 500) {
-    //   level += 1
-    //   gameSpeed = 300
-    // } else if (score >= 1000) {
-    //   level += 1
-    //   gameSpeed = 200
-    // } else if (score >= 2000) {
-    //   level += 1
-    //   gameSpeed = 100
-    // } else if (score >= 5000) {
-    //   level += 1
-    //   gameSpeed = 50
-    // }
 
-    // levelScreen.innerText = level
+    scoreScreen.innerText = score
+    levelScreen.innerText = level
   }
 
   // * // CAN BlOCK MOVE // FREEZE BLOCK // HANDLE KEYUP ***********************
@@ -285,7 +290,6 @@ function init() {
   function handleKeyUp(event) {
     const key = event.keyCode
     if (key === 37) {
-      console.log('LEFT')
       // Move left - take away 1 from x coordinate - move for one left
       activeBlock.x -= 1
       if (cantBlockMove()) {
@@ -293,7 +297,6 @@ function init() {
         activeBlock.x += 1
       }
     } else if (key === 39) {
-      console.log('RIGHT')
       // Move right - add 1 to x coordinate - move for one right
       activeBlock.x += 1
       if (cantBlockMove()) {
@@ -302,7 +305,6 @@ function init() {
       }
     } else if (key === 40) {
       // Move down - take away 1 from y coordinate - move for one down
-      console.log('DOWN')
       activeBlock.y += 1
       if (cantBlockMove()) {
         //if there is a colision we put block one step back
@@ -314,7 +316,6 @@ function init() {
         activeBlock.y = 0
       }
     } else if (key === 38) {
-      console.log('ROTATE')
       rotateActiveBlock()
     }
     addActiveBlock()
@@ -340,7 +341,7 @@ function init() {
       activeBlock.shape = createBlock()
       // Block is starting on top row, on 4 column
       activeBlock.y = 0
-      activeBlock.x = 3
+      activeBlock.x = 4
     }
     addActiveBlock()
     createNewGrid()
