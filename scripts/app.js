@@ -36,7 +36,7 @@ function init() {
 
   const gridColumns = 10
   const gridRows = 20
-  let gameSpeed = 100
+  let gameSpeed = 400
   let score = 0
   let level = 1
 
@@ -143,15 +143,9 @@ function init() {
   }
 
   function rotateActiveBlock() {
-    // we have to save block before rotation
-    const beforeRotationActiveBlock = activeBlock.shape
     activeBlock.shape = activeBlock.shape.map((row, index) =>
       activeBlock.shape.map((item) => item[index]).reverse()
     )
-    // if (cantBlockMove()) {
-    //   // if we can't rotate shape near the walls, we have to define shape before rotation.
-    //   activeBlock.shape = beforeRotationActiveBlock
-    // }
   }
 
   function createNewGrid() {
@@ -368,7 +362,8 @@ function init() {
     console.log('clicked')
     setTimeout(startGame, gameSpeed)
   }
-  document.addEventListener('click', handleButtonClick)
+
+  startButton.addEventListener('click', handleButtonClick)
 }
 
 window.addEventListener('DOMContentLoaded', init)
