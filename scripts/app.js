@@ -33,6 +33,7 @@ function init() {
   const levelScreen = document.getElementById('levelspan')
   const grid = document.querySelector('.grid')
   const startButton = document.getElementById('start')
+  const audio = document.getElementById('audio')
 
   const gridColumns = 10
   const gridRows = 20
@@ -218,12 +219,12 @@ function init() {
         if (score >= 20) {
           level = 2
           // levelScreen.innerText = level
-          gameSpeed = 300
+          gameSpeed = 250
         }
-        if (score >= 140) {
+        if (score >= 120) {
           level = 3
           // levelScreen.innerText = level
-          gameSpeed = 200
+          gameSpeed = 180
         }
         if (score >= 260) {
           level = 4
@@ -364,6 +365,18 @@ function init() {
   }
 
   startButton.addEventListener('click', handleButtonClick)
+
+  function playTetrisAudio() {
+    function playAudio() {
+      audio.src =
+        'https://ia600504.us.archive.org/33/items/TetrisThemeMusic/Tetris.mp3'
+      audio.play()
+    }
+    playAudio()
+    setTimeout(playAudio, 82000)
+  }
+
+  startButton.addEventListener('click', playTetrisAudio)
 }
 
 window.addEventListener('DOMContentLoaded', init)
