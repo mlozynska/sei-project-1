@@ -340,43 +340,45 @@ function init() {
     // pushing first block
     activeBlock.y += 1
     if (cantBlockMove()) {
-      //if there is a colision we put block one step back
+      //if there is a colision we change block's shapre one step back
       activeBlock.y -= 1
       // block freezing when it has bottom colision
       freezeBlock()
       //we need to add new activeBlock to appear on top
       activeBlock.shape = createBlock()
-      // Block is starting on top row, on 4 column
+      // Block is starting on top row, in the middle of a row
       activeBlock.y = 0
       activeBlock.x = Math.floor((gridColumns - activeBlock.shape.length) / 2)
     }
     if (cantBlockMove()) {
+      audio.muted = true
       return window.alert('GAME OVER!')
+
+      // stopPlayTetrisAudio()
     }
     addActiveBlock()
     createNewGrid()
-    // startGame() - is not working, block immediately felling down on the bottom. we neen to add delay - setTimeout. We have to add another timer to move it down, because now block is moving only once.
+
     setTimeout(startGame, gameSpeed)
   }
 
   function handleButtonClick(event) {
-    console.log('clicked')
     setTimeout(startGame, gameSpeed)
   }
 
   startButton.addEventListener('click', handleButtonClick)
 
-  function playTetrisAudio() {
-    function playAudio() {
-      audio.src =
-        'https://ia600504.us.archive.org/33/items/TetrisThemeMusic/Tetris.mp3'
-      audio.play()
-    }
-    playAudio()
-    setTimeout(playAudio, 82000)
+  function playAudio() {
+    audio.src =
+      'https://ia600504.us.archive.org/33/items/TetrisThemeMusic/Tetris.mp3'
+    audio.play()
   }
 
-  startButton.addEventListener('click', playTetrisAudio)
+  // function stopPlayTetrisAudio() {
+  //   clearTimeout(playsAudio)
+  // }
+
+  startButton.addEventListener('click', playAudio)
 }
 
 window.addEventListener('DOMContentLoaded', init)
