@@ -1,25 +1,25 @@
 // ? Tetris
 
-// / Create score variable and score box to show the result.
-// / Create level box
-// / How blocks are dropping down - setTimeout? 1s are chanching on 0, bottom 0s are changing on 1. setTimeout in setTimeout.
-// / How to detect collision with bottom row? fuctionn to check if is possible to move down.
-// / How to stop (freeze) the piece when it is on the bottom? function check if it is bottom line?
-// / how to detect freezed pices and stop moving the block.
-// / How to connect left/right moves to the keybord?
-// / How to detect collision with a wall, and to stop block to run out of the grid. functions canMoveRight? canMoveLeft?
-// / How to make the row to disappear? How to find that all cells of a row are filled in?
-// / Create one block - use matrix.
-// / Create array with seven different shapes of blocks - 'tetriminos
+// * Create score variable and score box to show the result.
+// * Create level box
+// * How blocks are dropping down - setTimeout? 1s are chanching on 0, bottom 0s are changing on 1. setTimeout in setTimeout.
+// * How to detect collision with bottom row? fuctionn to check if is possible to move down.
+// * How to stop (freeze) the piece when it is on the bottom? function check if it is bottom line?
+// * how to detect freezed pices and stop moving the block.
+// * How to connect left/right moves to the keybord?
+// * How to detect collision with a wall, and to stop block to run out of the grid. functions canMoveRight? canMoveLeft?
+// * How to make the row to disappear? How to find that all cells of a row are filled in?
+// * Create one block - use matrix.
+// * Create array with seven different shapes of blocks - 'tetriminos
 
 // * Create array with seven different colours. Will choose them randomly.
 // * Random block appears in a center on a top row
 
 // * ROTATION
-// / How to connect rotation to the keybord?
+// * How to connect rotation to the keybord?
 // * How to rotate near the wall?
 
-//? BONUS TASKS
+// * ADDITIONAL TASKS
 // * Detect colision with top? While loop - drop down pieces untill some piece is higher || equal the top of the grid.
 // * It is possible to complete up to four lines simultaneously with the use of the I-shaped tetrimino; this move is called a "Tetris", and is the basis of the game's title.
 // * Create the way of storing high score.
@@ -144,9 +144,15 @@ function init() {
   }
 
   function rotateActiveBlock() {
+    // we have to save block before rotation
+    const beforeRotationActiveBlock = activeBlock.shape
     activeBlock.shape = activeBlock.shape.map((row, index) =>
       activeBlock.shape.map((item) => item[index]).reverse()
     )
+    if (cantBlockMove()) {
+      // if we can't rotate shape near the walls, we have to define shape before rotation.
+      activeBlock.shape = beforeRotationActiveBlock
+    }
   }
 
   function createNewGrid() {
@@ -218,27 +224,22 @@ function init() {
         }
         if (score >= 20) {
           level = 2
-          // levelScreen.innerText = level
           gameSpeed = 250
         }
-        if (score >= 120) {
+        if (score >= 140) {
           level = 3
-          // levelScreen.innerText = level
           gameSpeed = 180
         }
         if (score >= 260) {
           level = 4
-          // levelScreen.innerText = level
           gameSpeed = 150
         }
         if (score >= 380) {
           level = 5
-          // levelScreen.innerText = level
           gameSpeed = 100
         }
         if (score >= 500) {
           level = 6
-          // levelScreen.innerText = level
           gameSpeed = 75
         }
       }
@@ -282,6 +283,20 @@ function init() {
     checkLines()
   }
 
+  function moveBlockDown() {
+    if (cantBlockMove()) {
+      //if there is a colision we change block's shapre one step back
+      activeBlock.y -= 1
+      // block freezing when it has bottom colision
+      freezeBlock()
+      //we need to add new activeBlock to appear on top
+      activeBlock.shape = createBlock()
+      // Block is starting on top row, in the middle of a row
+      activeBlock.y = 0
+      activeBlock.x = Math.floor((gridColumns - activeBlock.shape.length) / 2)
+    }
+  }
+
   function handleKeyUp(event) {
     const key = event.keyCode
     if (key === 37) {
@@ -302,13 +317,7 @@ function init() {
       // Move down - take away 1 from y coordinate - move for one down
       activeBlock.y += 1
       if (cantBlockMove()) {
-        //if there is a colision we put block one step back
-        activeBlock.y -= 1
-        // block freezing when it has bottom colision
-        freezeBlock()
-        //we need to add new activeBlock to appear on top by calling function createBlock.
-        activeBlock.shape = createBlock()
-        activeBlock.y = 0
+        moveBlockDown()
       }
     } else if (key === 38) {
       rotateActiveBlock()
@@ -318,18 +327,6 @@ function init() {
   }
   document.addEventListener('keyup', handleKeyUp)
 
-  function moveBlockDown() {
-    // activeBlock.y += 1
-    // if (cantBlockMove()) {
-    //   //if there is a colision we put block one step back
-    //   activeBlock.y -= 1
-    //   // block freezing when it has bottom colision
-    //   freezeBlock()
-    //   //we need to add new activeBlock to appear on top by calling function createBlock.
-    //   activeBlock.shape = createBlock()
-    //   activeBlock.y = 0
-    // }
-  }
   // * ---> START GAME FUNCTION <--- * //
 
   createNewGrid()
@@ -339,22 +336,10 @@ function init() {
   function startGame() {
     // pushing first block
     activeBlock.y += 1
-    if (cantBlockMove()) {
-      //if there is a colision we change block's shapre one step back
-      activeBlock.y -= 1
-      // block freezing when it has bottom colision
-      freezeBlock()
-      //we need to add new activeBlock to appear on top
-      activeBlock.shape = createBlock()
-      // Block is starting on top row, in the middle of a row
-      activeBlock.y = 0
-      activeBlock.x = Math.floor((gridColumns - activeBlock.shape.length) / 2)
-    }
+    moveBlockDown()
     if (cantBlockMove()) {
       audio.muted = true
       return window.alert('GAME OVER!')
-
-      // stopPlayTetrisAudio()
     }
     addActiveBlock()
     createNewGrid()
@@ -373,10 +358,6 @@ function init() {
       'https://ia600504.us.archive.org/33/items/TetrisThemeMusic/Tetris.mp3'
     audio.play()
   }
-
-  // function stopPlayTetrisAudio() {
-  //   clearTimeout(playsAudio)
-  // }
 
   startButton.addEventListener('click', playAudio)
 }
