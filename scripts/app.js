@@ -127,7 +127,7 @@ function init() {
   }
 
   function addActiveBlock() {
-    // before adding new block we need to remove preveious on
+    // before adding new block we need to remove previous one
     removeActiveBlock()
     // add active block to the grid before createNewGrid.
     // we have to loop through activeBlock shape
