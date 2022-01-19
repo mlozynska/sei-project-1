@@ -100,13 +100,19 @@ header {
 #control {
   align-items: center;
   text-align: center;
-  font-size: 18px;
+  font-size: 21px;
   height: 70px;
   width: 330px;
   background-color: #fbe870;
   border: 5px solid #ed0a3f;
-  margin: 20px 0 0 235px;
+  margin: 20px 0 -10px 0;
 }
+
+.controlBox {
+  display: flex;
+  justify-content: center;
+}
+
 .controlsList {
   display: flex;
   flex-direction: row;
@@ -118,6 +124,7 @@ header {
   text-align: center;
   padding: 0 10px;
   margin: 10px;
+  color: #ed0a3f;
 }
 .pList {
   margin: 0;
