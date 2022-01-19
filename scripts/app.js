@@ -1,19 +1,19 @@
-// ? Tetris
+// ? Pseudocode
 
+// * Build out the grid
+// * Create one block - use matrix.
+// * Random block appears in a center on a top row
+// * How blocks are dropping down - setTimeout? 1s are chanching on 0, bottom 0s are changing on 2.
+// * Freeze the piece when it is on the bottom? function check if it is bottom line?
+// * Change the colour of frosen block.
+// * Detect freezed pices and stop moving the block. Fuctionn to check if is possible to move down.
+// * Make the row to disappear? How to find that all cells of a row are filled in?
+// * Connect left/right moves to the keybord?
+// * Detect collision with a wall, and to stop block to run out of the grid. functions canMoveRight? canMoveLeft?
+// * Create array with seven different shapes of blocks - 'tetriminos
+// * Create array with seven different colours. Will choose them randomly.
 // * Create score variable and score box to show the result.
 // * Create level box
-// * How blocks are dropping down - setTimeout? 1s are chanching on 0, bottom 0s are changing on 1. setTimeout in setTimeout.
-// * How to detect collision with bottom row? fuctionn to check if is possible to move down.
-// * How to stop (freeze) the piece when it is on the bottom? function check if it is bottom line?
-// * how to detect freezed pices and stop moving the block.
-// * How to connect left/right moves to the keybord?
-// * How to detect collision with a wall, and to stop block to run out of the grid. functions canMoveRight? canMoveLeft?
-// * How to make the row to disappear? How to find that all cells of a row are filled in?
-// * Create one block - use matrix.
-// * Create array with seven different shapes of blocks - 'tetriminos
-
-// * Create array with seven different colours. Will choose them randomly.
-// * Random block appears in a center on a top row
 
 // * ROTATION
 // * How to connect rotation to the keybord?
@@ -24,8 +24,8 @@
 // * It is possible to complete up to four lines simultaneously with the use of the I-shaped tetrimino; this move is called a "Tetris", and is the basis of the game's title.
 // * Create the way of storing high score.
 // * How to move to the next level, when playeyer accumulates special ammount of points.
-// * increase the speed with each level
-// * How to reset the game?
+// * Increase the speed with each level
+// * Reset the game?
 
 function init() {
   // * ---> GRID, FUNCTION CREATE NEW GRID <--- * //
@@ -63,45 +63,45 @@ function init() {
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
   ]
 
   let blocks = {
     O: [
       [1, 1],
-      [1, 1],
+      [1, 1]
     ],
     I: [
       [0, 0, 0, 0],
       [1, 1, 1, 1],
       [0, 0, 0, 0],
-      [0, 0, 0, 0],
+      [0, 0, 0, 0]
     ],
     S: [
       [0, 1, 1],
       [1, 1, 0],
-      [0, 0, 0],
+      [0, 0, 0]
     ],
     Z: [
       [1, 1, 0],
       [0, 1, 1],
-      [0, 0, 0],
+      [0, 0, 0]
     ],
     J: [
       [1, 0, 0],
       [1, 1, 1],
-      [0, 0, 0],
+      [0, 0, 0]
     ],
     L: [
       [0, 0, 1],
       [1, 1, 1],
-      [0, 0, 0],
+      [0, 0, 0]
     ],
     T: [
       [1, 1, 1],
       [0, 1, 0],
-      [0, 0, 0],
-    ],
+      [0, 0, 0]
+    ]
   }
 
   // * ---> ACTIVE BLOCK <--- * //
@@ -113,8 +113,8 @@ function init() {
     // we will rotate our block inside the shape
     shape: [
       [1, 1],
-      [1, 1],
-    ],
+      [1, 1]
+    ]
   }
   function removeActiveBlock() {
     for (let y = 0; y < gridRows; y++) {
@@ -164,7 +164,7 @@ function init() {
       'green',
       'lilac',
       'darkgreen',
-      'pink',
+      'pink'
     ]
     const randomColour = Math.floor(Math.random(blockColours) * 7)
     const movingCell = blockColours[randomColour]
@@ -175,7 +175,7 @@ function init() {
           gridInnerText += `<div class="cell ${movingCell}"></div>`
         } else if (playField[y][x] === 2) {
           // if on a playingField there are 2s, they will be coloured in yellow. adding class freezedCell.
-          gridInnerText += `<div class="cell freezedCell"></div>`
+          gridInnerText += '<div class="cell freezedCell"></div>'
         } else {
           gridInnerText += '<div class="cell"></div>'
         }

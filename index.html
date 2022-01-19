@@ -13,6 +13,7 @@
     <script src="scripts/app.js" charset="utf-8"></script>
   </head>
   <body>
+    <!-- <div class="mainGrid"> -->
     <header>
       <h1 class="header">TETRIS</h1>
       <div class="info">
@@ -20,10 +21,31 @@
         <div class="level">Level: <span id="levelspan">1</span></div>
       </div>
     </header>
+
     <div class="grid-wrapper">
       <div class="grid"></div>
     </div>
+
+    <!-- </div> -->
+
     <button id="start">START</button>
+    <div id="control">
+      <h3 class="h3List">Controls</h3>
+      <ul class="controlsList">
+        <li>
+          <p class="pList">Rotate - &#8593;</p>
+        </li>
+        <li>
+          <p class="pList">Right - &#8594;</p>
+        </li>
+        <li>
+          <p class="pList">Left - &#8592;</p>
+        </li>
+        <li>
+          <p class="pList">Down - &#8595;</p>
+        </li>
+      </ul>
+    </div>
     <audio id="audio" loop></audio>
   </body>
 </html>
