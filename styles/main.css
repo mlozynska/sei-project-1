@@ -106,7 +106,6 @@ header {
   background-color: #fbe870;
   border: 5px solid #ed0a3f;
   margin: 20px 0 0 235px;
-  /* justify-content: center; */
 }
 .controlsList {
   display: flex;

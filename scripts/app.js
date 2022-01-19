@@ -23,7 +23,7 @@
 // * Detect colision with top? While loop - drop down pieces untill some piece is higher || equal the top of the grid.
 // * It is possible to complete up to four lines simultaneously with the use of the I-shaped tetrimino; this move is called a "Tetris", and is the basis of the game's title.
 // * Create the way of storing high score.
-// * How to move to the next level, when playeyer accumulates special ammount of points.
+// * Create move to the next level, when playeyer accumulates special ammount of points.
 // * Increase the speed with each level
 // * Reset the game?
 
