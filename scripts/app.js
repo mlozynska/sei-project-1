@@ -1,4 +1,4 @@
-// ? Pseudocode
+//  Pseudocode
 
 // * Build out the grid
 // * Create one block - use matrix.
@@ -37,13 +37,14 @@ function init() {
 
   const gridColumns = 10
   const gridRows = 20
+
   let gameSpeed = 400
   let score = 0
   let level = 1
 
-  // Create a Grid width = 12, height 20 - grid should refresh. setTimeout? function to create grid.
+  // Create a Grid width = 10, height 20
   // playfield - contains a picture of a grid for the time being. Every time when we change smth it is building new grid with changes.
-  let playField = [
+  const playField = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -66,7 +67,7 @@ function init() {
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
   ]
 
-  let blocks = {
+  const blocks = {
     O: [
       [1, 1],
       [1, 1]
@@ -106,11 +107,10 @@ function init() {
 
   // * ---> ACTIVE BLOCK <--- * //
 
-  let activeBlock = {
+  const activeBlock = {
     // block coordinates
     x: 4,
     y: 0,
-    // we will rotate our block inside the shape
     shape: [
       [1, 1],
       [1, 1]
@@ -285,7 +285,7 @@ function init() {
 
   function moveBlockDown() {
     if (cantBlockMove()) {
-      //if there is a colision we change block's shapre one step back
+      //if there is a colision we change block's position one step back
       activeBlock.y -= 1
       // block freezing when it has bottom colision
       freezeBlock()
