@@ -54,7 +54,7 @@ After that I created the first active block and function which is adding and mov
 
 When the tetromino is moving down before each step we have to check if the block can move, if there is a collision we need to freeze the tetromino.
 
-![](/assets/images/CanBlockMove.png)
+![](/assets/images/CantBlockMove.png)
 
 ![](/assets/images/FreezeBlock.png)
 
