@@ -1,7 +1,7 @@
 # Project-1 Tetris
 
 ![](/assets/images/Tetris.png)
-You can find the deployed version [here] (https://mlozynska.github.io/sei-project-1/)
+You can find the deployed version [here](https://mlozynska.github.io/sei-project-1/)
 
 Overview
 The first solo project of the Software Engineering Immersive course at GA London was to build a game, only using vanilla JavaScript, CSS & HTML. I had a choice to pick from 10 different games. My shortlist was – Tetris, Snake and Battleships. Finally, I decided to choose Tetris because it is my favourite game from my childhood. I expected to face a lot of challenges with this game.
