@@ -84,9 +84,9 @@ For example, if a block has three rows and three columns, every time after 90° 
 
 ## Key learnings
 
-How important it is to spend plenty of time planning before starting to code and to write detailed pseudocode.
-JavaScript fundamentals, how to write JS logic to make everything work. Tetris is extremely heavy on logic.
-First use of event listeners and DOM.
+- How important it is to spend plenty of time planning before starting to code and to write detailed pseudocode.
+- JavaScript fundamentals, how to write JS logic to make everything work. Tetris is extremely heavy on logic.
+- First use of event listeners and DOM.
 
 ## Future Features
 
